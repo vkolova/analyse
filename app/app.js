@@ -13,7 +13,7 @@ function load(stats) {
 	var mapModules = {};
 	var mapModulesIdent = {};
 	var mapModulesUid = {};
-	stats.modules.forEach(function(module, idx) {
+	stats.modules.filter(m => m.type !== "hidden modules").forEach(function(module, idx) {
 		mapModules[module.id] = module;
 		mapModulesIdent["$" + module.identifier] = module;
 		mapModulesUid[(module.uid = idx)] = module;
@@ -25,7 +25,7 @@ function load(stats) {
 		mapChunks[chunk.id] = chunk;
 		chunk.children = [];
 	});
-	stats.modules.forEach(function(module) {
+	stats.modules.filter(m => m.type !== "hidden modules").forEach(function(module) {
 		module.reasons = module.reasons || [];
 		module.reasons.forEach(function(reason) {
 			var m = mapModulesIdent["$" + reason.moduleIdentifier];
@@ -67,7 +67,7 @@ function load(stats) {
 			origin.moduleUid = m.uid;
 		});
 	});
-	stats.modules.forEach(function(module) {
+	stats.modules.filter(m => m.type !== "hidden modules").forEach(function(module) {
 		module.dependencies.sort(function(a, b) {
 			if (!a.loc && !b.loc) return 0;
 			if (!a.loc) return 1;
@@ -102,7 +102,7 @@ function load(stats) {
 	exports.mapModulesIdent = mapModulesIdent;
 
 	var ga = require("./googleAnalytics");
-	ga("set", "dimension1", categorize(stats.modules.length) + "");
+	ga("set", "dimension1", categorize(stats.modules.filter(m => m.type !== "hidden modules").length) + "");
 	ga("set", "dimension2", categorize(stats.chunks.length) + "");
 	ga("set", "dimension3", categorize(stats.assets.length) + "");
 	ga("set", "dimension4", categorize(stats.time) + "");

@@ -15,7 +15,7 @@ table.table.table-condensed
 					each name in chunk.names
 						code= name
 						= " "
-				td= chunk.modules ? chunk.modules.length : "N/A"
+				td= chunk.modules ? chunk.modules.filter(m => m.type !== "hidden modules").length : "N/A"
 				td= require("../../formatSize")(chunk.size)
 				td
 					each parent in chunk.parents

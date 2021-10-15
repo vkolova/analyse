@@ -4,7 +4,7 @@ var findById = require("../../findById");
 module.exports = function() {
 	document.title = "hints";
 	var multiRefs = [];
-	app.stats.modules.forEach(function(module) {
+	app.stats.modules.filter(m => m.type !== "hidden modules").forEach(function(module) {
 		var requiresSum = {};
 		module.dependencies.forEach(function(d) {
 			if (!requiresSum[d.moduleId])
@@ -32,7 +32,7 @@ module.exports = function() {
 	});
 
 	var multiChunks = [];
-	app.stats.modules.forEach(function(module) {
+	app.stats.modules.filter(m => m.type !== "hidden modules").forEach(function(module) {
 		if (module.chunks.length >= 2) {
 			multiChunks.push({
 				module: module,

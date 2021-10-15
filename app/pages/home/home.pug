@@ -26,7 +26,7 @@
 		.col-md-3
 			.well: center
 				h1: a(href="#modules")
-					= stats.modules.length
+					= stats.modules.filter(m => m.type !== "hidden modules").length
 					br
 					| modules
 		.col-md-3

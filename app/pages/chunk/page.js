@@ -4,9 +4,13 @@ var modulesGraph = require("../../graphs/modules");
 module.exports = function(id) {
 	id = parseInt(id, 10);
 	document.title = "chunk " + id;
+
+	newStats = Object.assign({}, app.stats)
+	newStats.modules = newStats.modules.filter(m => m.type !== "hidden modules")
+
 	$(".page").html(
 		require("./chunk.pug")({
-			stats: app.stats,
+			stats: newStats,
 			id: id,
 			chunk: app.mapChunks[id]
 		})

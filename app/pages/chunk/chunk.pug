@@ -67,7 +67,7 @@
 							td
 								if origin.loc
 									code= origin.loc
-	if chunk.modules && chunk.modules.length > 0
+	if chunk.modules && chunk.modules.filter(m => m.type !== "hidden modules").length > 0
 		.row: .col-md-12: .well
 			h4 modules
 			table.table.table-condensed

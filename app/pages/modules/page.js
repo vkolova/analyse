@@ -2,9 +2,11 @@ var app = require("../../app");
 var modulesGraph = require("../../graphs/modules");
 
 function renderTable() {
+	newStats = Object.assign({}, app.stats)
+	newStats.modules = newStats.modules.filter(m => m.type !== "hidden modules")
 	$(".page").html(
 		require("./modules.pug")({
-			stats: app.stats
+			stats: newStats
 		})
 	);
 }

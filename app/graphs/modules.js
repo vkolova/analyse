@@ -8,15 +8,15 @@ var element = document.getElementById("sigma-modules");
 
 var nodes = [];
 var edges = [];
-var moduleCount = app.stats.modules.length;
+var moduleCount = app.stats.modules.filter(m => m.type !== "hidden modules").length;
 var chunkCount = app.stats.chunks.length;
 var maxTimestamp = 0;
 var maxSize = 0;
-app.stats.modules.forEach(function(module, idx) {
+app.stats.modules.filter(m => m.type !== "hidden modules").forEach(function(module, idx) {
 	if (module.size > maxSize) maxSize = module.size;
 	if (module.timestamp > maxTimestamp) maxTimestamp = module.timestamp;
 });
-app.stats.modules.forEach(function(module, idx) {
+app.stats.modules.filter(m => m.type !== "hidden modules").forEach(function(module, idx) {
 	var color = percentageToColor(
 		Math.pow((module.size + 1) / (maxSize + 1), 1 / 4)
 	);
